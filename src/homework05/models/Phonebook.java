@@ -14,6 +14,7 @@ public class Phonebook {
 
     public Phonebook() {
         contacts = new ArrayList<Contact>();
+        contactsMap = new HashMap<String, Contact>();
     }
 
     public ArrayList<Contact> getContacts() {
@@ -60,7 +61,7 @@ public class Phonebook {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Phone book:%n");
+        StringBuilder sb = new StringBuilder("Phone book:\n");
         int i = 1;
         for (Contact contact : contacts) {
             sb.append(contact.toString());

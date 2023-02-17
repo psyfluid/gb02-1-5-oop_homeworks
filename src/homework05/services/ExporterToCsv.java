@@ -11,7 +11,7 @@ public class ExporterToCsv implements Exporter {
     public void save(String path, Phonebook phonebook) {
         String sep = ";";
         try (FileWriter fw = new FileWriter(path, false)) {
-            fw.append("id;lastName;firstName;phone");
+            fw.append("id;lastName;firstName;phone\n");
             for (int i = 0; i < phonebook.size(); i++) {
                 Contact contact = phonebook.get(i);
                 StringBuilder sb = new StringBuilder();
@@ -19,7 +19,7 @@ public class ExporterToCsv implements Exporter {
                     sb.append(i).append(sep);
                     sb.append(contact.lastName()).append(sep);
                     sb.append(contact.firstName()).append(sep);
-                    sb.append(phone).append("%n");
+                    sb.append(phone).append("\n");
                 }
                 fw.append(sb.toString());
             }

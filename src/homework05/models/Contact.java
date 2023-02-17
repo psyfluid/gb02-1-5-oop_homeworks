@@ -16,6 +16,8 @@ public class Contact implements Comparable<Contact> {
     public Contact(String lastName, String firstName) {
         this.lastName = lastName;
         this.firstName = firstName;
+        this.phones = new ArrayList<>();
+        this.phonesHash = new HashSet<>();
     }
 
     public String lastName() {
@@ -70,9 +72,9 @@ public class Contact implements Comparable<Contact> {
     }
 
     private void getContactInfo(StringBuilder sb) {
-        sb.append(String.format("%s %s%n", lastName, firstName));
+        sb.append(String.format("%s %s\n", lastName, firstName));
         for (String phone : phones)
-            sb.append("  ").append(phone).append("%n");
+            sb.append("  ").append(phone).append("\n");
     }
 
     @Override

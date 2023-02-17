@@ -1,5 +1,8 @@
 package homework05.mvp;
 
+import homework05.exceptions.DuplicatePhoneException;
+import homework05.exceptions.InvalidPhoneException;
+import homework05.exceptions.PhoneNotFoundException;
 import homework05.services.FileFormat;
 
 import java.util.Map;
@@ -32,7 +35,7 @@ public class Presenter {
         model.currentBook().remove(model.currentContact());
         view.showMessage("Contact removed successfully");
 
-        if (model.currentBook().size() >= 0) {
+        if (model.currentBook().size() > 0) {
             model.getContact(0);
         } else {
             model.setCurrentContact(null);
@@ -41,11 +44,19 @@ public class Presenter {
     }
 
     public void addPhone() {
-        model.currentContact().addPhone(view.getPhone());
+        try {
+            model.currentContact().addPhone(view.getPhone());
+        } catch (InvalidPhoneException | DuplicatePhoneException e) {
+            view.showMessage(e.getMessage());
+        }
     }
 
     public void removePhone() {
-        model.currentContact().removePhone(view.getPhone());
+        try {
+            model.currentContact().removePhone(view.getPhone());
+        } catch (InvalidPhoneException | PhoneNotFoundException e) {
+            view.showMessage(e.getMessage());
+        }
     }
 
     public boolean getContact() {

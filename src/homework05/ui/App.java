@@ -54,7 +54,7 @@ public class App {
                             contactMenu(iScanner);
                         }
                     }
-                    case "8" -> enumChoice(iScanner, FileFormat.class);
+                    case "8" -> fileFormat = enumChoice(iScanner, FileFormat.class);
                     case "0" -> {
                         return;
                     }
@@ -76,7 +76,10 @@ public class App {
             switch (action) {
                 case "1" -> presenter.addPhone();
                 case "2" -> presenter.removePhone();
-                case "3" -> presenter.remove();
+                case "3" -> {
+                    presenter.remove();
+                    return;
+                }
                 case "4" -> {
                     return;
                 }
