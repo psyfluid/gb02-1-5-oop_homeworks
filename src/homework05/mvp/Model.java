@@ -75,6 +75,7 @@ public class Model {
     }
 
     public String showPhonebook() {
+        if (this.currentBook.size() == 0) return "Phone book is empty";
         return this.currentBook.toString();
     }
 

@@ -13,6 +13,7 @@ public class Phonebook {
     private HashMap<String, Contact> contactsMap;
 
     public Phonebook() {
+        contacts = new ArrayList<Contact>();
     }
 
     public ArrayList<Contact> getContacts() {
