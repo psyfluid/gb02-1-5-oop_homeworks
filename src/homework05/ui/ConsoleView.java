@@ -55,4 +55,10 @@ public class ConsoleView implements View {
         System.out.printf("Input search string: ");
         return iScanner.nextLine();
     }
+
+    @Override
+    public String getPhone() {
+        System.out.printf("Input phone number: ");
+        return iScanner.nextLine();
+    }
 }

@@ -17,8 +17,6 @@ public class ImporterFromJson implements Importer {
             String jsonString = Files.readString(fileName);
             Map<String, Object> jsonObject = JSON.parse(jsonString);
 
-            StringBuilder builder = new StringBuilder();
-
             Object rootValue = jsonObject.get("root");
             if (rootValue instanceof List<?>) {
                 for (Map contactMap : (List<Map>) rootValue) {
@@ -31,7 +29,7 @@ public class ImporterFromJson implements Importer {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }
