@@ -1,5 +1,6 @@
 package homework05.mvp;
 
+import homework05.exceptions.DuplicateContactException;
 import homework05.exceptions.DuplicatePhoneException;
 import homework05.exceptions.InvalidPhoneException;
 import homework05.exceptions.PhoneNotFoundException;
@@ -26,7 +27,12 @@ public class Presenter {
     }
 
     public boolean add() {
-        model.addContact(view.getLastName(), view.getFirstName());
+        try {
+            model.addContact(view.getLastName(), view.getFirstName());
+        } catch (DuplicateContactException e) {
+            view.showMessage(e.getMessage());
+            return false;
+        }
         view.showMessage("Contact added successfully");
         return true;
     }

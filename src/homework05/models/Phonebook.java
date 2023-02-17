@@ -21,7 +21,7 @@ public class Phonebook {
         return contacts;
     }
 
-    public void add(Contact contact) {
+    public void add(Contact contact) throws DuplicateContactException {
         String fullName = contact.fullName();
         if (contactsMap.containsKey(fullName)) throw new DuplicateContactException();
 
