@@ -27,6 +27,7 @@ public class ExporterToJson implements Exporter {
                     if (j++ > 0) sb.append(",\n");
                     sb.append("        ").append("\"").append(phone).append("\"");
                 }
+                sb.append("\n");
                 sb.append("      ").append("]\n");
                 sb.append("    ").append("}");
                 if (i < size - 1) sb.append(",");
