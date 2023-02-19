@@ -12,35 +12,27 @@ public class ConsoleView implements View {
     }
 
     @Override
-    public String getFirstName() {
-        System.out.printf("First name: ");
-        return iScanner.nextLine();
+    public void showString(String s) {
+        System.out.print(s);
     }
 
     @Override
-    public void setFirstName(String value) {
-        System.out.printf("First name: %s%n", value);
-    }
-
-    @Override
-    public String getLastName() {
-        System.out.printf("Last name: ");
-        return iScanner.nextLine();
-    }
-
-    @Override
-    public void setLastName(String value) {
-        System.out.printf("Last name: %s%n", value);
+    public void inputPrompt(String field) {
+        showString(String.format("Input %s: ", field));
     }
 
     @Override
     public void showMessage(String s) {
-        System.out.printf("%s%n%n", s);
+        showString(String.format("%s%n%n", s));
     }
 
     @Override
-    public int getId() {
-        System.out.printf("Input contact ID: ");
+    public void showMenu(String s) {
+        showString(String.format("%s%n", s));
+    }
+
+    @Override
+    public Integer getIntegerFieldFromInput() {
         String idString = iScanner.nextLine();
 
         try {
@@ -51,14 +43,9 @@ public class ConsoleView implements View {
     }
 
     @Override
-    public String getSearchString() {
-        System.out.printf("Input search string: ");
+    public String getStringFieldFromInput(String field) {
+        inputPrompt(field);
         return iScanner.nextLine();
     }
 
-    @Override
-    public String getPhone() {
-        System.out.printf("Input phone number: ");
-        return iScanner.nextLine();
-    }
 }

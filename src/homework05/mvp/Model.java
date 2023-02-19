@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class Model {
 
+    private final Map<FileFormat, String> paths;
     private Phonebook currentBook;
     private Contact currentContact;
     private List<Contact> foundContacts;
-    private Map<FileFormat, String> paths;
     private Importer importer;
     private Exporter exporter;
 
@@ -30,13 +30,13 @@ public class Model {
         importer.load(paths.get(fileFormat), this.currentBook);
     }
 
-    public void save(FileFormat fileFormat) {
+    public boolean save(FileFormat fileFormat) {
         if (fileFormat == FileFormat.CSV) {
             exporter = new ExporterToCsv();
         } else if (fileFormat == FileFormat.JSON) {
             exporter = new ExporterToJson();
         }
-        exporter.save(paths.get(fileFormat), this.currentBook);
+        return exporter.save(paths.get(fileFormat), this.currentBook);
     }
 
     public void newPhonebook() {
@@ -47,8 +47,8 @@ public class Model {
         return this.currentBook;
     }
 
-    public void addContact(String lastName, String firstName) {
-        Contact contact = new Contact(lastName, firstName);
+    public void addContact(String firstName, String lastName) {
+        Contact contact = new Contact(firstName, lastName);
         this.currentBook.add(contact);
         setCurrentContact(contact);
     }

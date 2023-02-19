@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class ExporterToCsv implements Exporter {
 
-    public void save(String path, Phonebook phonebook) {
+    public boolean save(String path, Phonebook phonebook) {
         String sep = ";";
         try (FileWriter fw = new FileWriter(path, false)) {
             fw.append("id;lastName;firstName;phone\n");
@@ -24,8 +24,10 @@ public class ExporterToCsv implements Exporter {
                 fw.append(sb.toString());
             }
             fw.flush();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
+        return true;
     }
 }

@@ -25,7 +25,7 @@ public class ImporterFromCsv implements Importer {
                     id = idNew;
                     String lastName = contactString[1];
                     String firstName = contactString[2];
-                    contact = new Contact(lastName, firstName);
+                    contact = new Contact(firstName, lastName);
                 }
                 String phone = contactString[3];
                 if (contact != null) contact.addPhone(phone);

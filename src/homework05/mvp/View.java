@@ -1,19 +1,17 @@
 package homework05.mvp;
 
 public interface View {
-    String getFirstName();
 
-    void setFirstName(String value);
-
-    String getLastName();
-
-    void setLastName(String value);
+    void showString(String s);
 
     void showMessage(String s);
 
-    int getId();
+    void showMenu(String s);
 
-    String getSearchString();
+    void inputPrompt(String field);
 
-    String getPhone();
+    Integer getIntegerFieldFromInput();
+
+    String getStringFieldFromInput(String field);
+
 }

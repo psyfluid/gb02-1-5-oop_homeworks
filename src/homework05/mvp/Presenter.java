@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class Presenter {
 
-    private Model model;
-    private View view;
+    private final Model model;
+    private final View view;
 
     public Presenter(View view, Map<FileFormat, String> paths) {
         this.view = view;
@@ -26,9 +26,9 @@ public class Presenter {
         }
     }
 
-    public boolean add() {
+    public boolean addContact() {
         try {
-            model.addContact(view.getLastName(), view.getFirstName());
+            model.addContact(view.getStringFieldFromInput("first name"), view.getStringFieldFromInput("last name"));
         } catch (DuplicateContactException e) {
             view.showMessage(e.getMessage());
             return false;
@@ -37,7 +37,7 @@ public class Presenter {
         return true;
     }
 
-    public void remove() {
+    public void removeContact() {
         model.currentBook().remove(model.currentContact());
         view.showMessage("Contact removed successfully");
 
@@ -51,7 +51,8 @@ public class Presenter {
 
     public void addPhone() {
         try {
-            model.currentContact().addPhone(view.getPhone());
+            model.currentContact().addPhone(view.getStringFieldFromInput("phone number"));
+            view.showMessage("Phone added successfully");
         } catch (InvalidPhoneException | DuplicatePhoneException e) {
             view.showMessage(e.getMessage());
         }
@@ -59,14 +60,15 @@ public class Presenter {
 
     public void removePhone() {
         try {
-            model.currentContact().removePhone(view.getPhone());
+            model.currentContact().removePhone(view.getStringFieldFromInput("phone number"));
+            view.showMessage("Phone removed successfully");
         } catch (InvalidPhoneException | PhoneNotFoundException e) {
             view.showMessage(e.getMessage());
         }
     }
 
     public boolean getContact() {
-        int id = view.getId();
+        int id = getId();
         if (id < 0) {
             view.showMessage("Wrong value");
             return false;
@@ -75,13 +77,18 @@ public class Presenter {
         return true;
     }
 
+    private int getId() {
+        view.inputPrompt("contact ID");
+        return view.getIntegerFieldFromInput();
+    }
+
     public boolean findContacts() {
-        String name = view.getSearchString();
-        int id = -1;
+        String name = view.getStringFieldFromInput("search string");
+        int id;
         int numberOfContacts = model.findContacts(name);
-        if (numberOfContacts > 0) {
+        if (numberOfContacts > 1) {
             id = contactChoiceMenu();
-        } else if (numberOfContacts == 0) {
+        } else if (numberOfContacts == 1) {
             id = 0;
         } else {
             view.showMessage("Contacts not found");
@@ -98,11 +105,16 @@ public class Presenter {
 
     private int contactChoiceMenu() {
         view.showMessage(model.showFoundContacts());
-        return view.getId();
+        return getId();
     }
 
     public void saveToFile(FileFormat fileFormat) {
-        model.save(fileFormat);
+        String msg;
+        if (model.save(fileFormat)) msg = "File successfully saved";
+        else {
+            msg = "Failed to save file";
+        }
+        view.showMessage(msg);
     }
 
     public void showPhonebook() {
@@ -120,7 +132,5 @@ public class Presenter {
     public void newPhonebook() {
         model.newPhonebook();
     }
-
-
 
 }

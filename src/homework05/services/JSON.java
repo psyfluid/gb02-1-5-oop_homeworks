@@ -9,10 +9,13 @@ public class JSON {
     private static int index;
     private static int length;
 
+    private JSON() {
+    }
+
     public static Map<String, Object> parse(String value) {
         index = 0;
         length = value.length();
-        Map<String, Object> jsonObject = new LinkedHashMap<String, Object>();
+        Map<String, Object> jsonObject = new LinkedHashMap<>();
         jsonObject.put("root", jsonRead(value.strip()));
         return jsonObject;
     }
@@ -20,29 +23,33 @@ public class JSON {
     private static Object jsonRead(String value) {
         jsonSkipWhitespace(value);
         String symbol = value.substring(index, index + 1);
-        if (symbol.equals("\"")) {
-            index++;
-            return jsonReadString(value);
-        } else if (symbol.equals("[")) {
-            index++;
-            return jsonReadArray(value);
-        } else if (symbol.equals("{")) {
-            index++;
-            return jsonReadObject(value);
-        } else if (symbol.equals("n")) {
-            if (value.substring(index, index + 4) == "null") {
-                return null;
-            }
-        } else if (symbol.equals("t")) {
-            if (value.substring(index, index + 4) == "true") {
-                return true;
-            }
-        } else if (symbol.equals("f")) {
-            if (value.substring(index, index + 5) == "false") {
-                return false;
-            }
-        } else {
-            return jsonReadNumber(value);
+        switch (symbol) {
+            case "\"":
+                index++;
+                return jsonReadString(value);
+            case "[":
+                index++;
+                return jsonReadArray(value);
+            case "{":
+                index++;
+                return jsonReadObject(value);
+            case "n":
+                if ("null".equals(value.substring(index, index + 4))) {
+                    return null;
+                }
+                break;
+            case "t":
+                if ("true".equals(value.substring(index, index + 4))) {
+                    return true;
+                }
+                break;
+            case "f":
+                if ("false".equals(value.substring(index, index + 5))) {
+                    return false;
+                }
+                break;
+            default:
+                return jsonReadNumber(value);
         }
 
         return null;
@@ -54,22 +61,19 @@ public class JSON {
 
     private static Object jsonReadNumber(String value) {
         int startIndex = index;
-        while ("-+0123456789.".indexOf(value.charAt(index)) > 0) {
-            index++;
-        }
+        while ("-+0123456789.".indexOf(value.charAt(index)) > 0) index++;
         try {
             String stringNumber = value.substring(startIndex, index);
             if (stringNumber.indexOf(".") > 0) return Double.parseDouble(stringNumber);
             return Integer.parseInt(stringNumber);
         } catch (Exception e) {
-            // System.out.println(e);
             return null;
         }
     }
 
     private static Object jsonReadObject(String value) {
         jsonSkipWhitespace(value);
-        Map<String, Object> jsonObject = new LinkedHashMap<String, Object>();
+        Map<String, Object> jsonObject = new LinkedHashMap<>();
         while (index < length) {
             String elementKey = (String) jsonRead(value);
             String symbol = value.substring(index, ++index);
@@ -87,7 +91,7 @@ public class JSON {
         return jsonObject;
     }
 
-    private static List jsonReadArray(String value) {
+    private static List<Object> jsonReadArray(String value) {
         jsonSkipWhitespace(value);
         List<Object> arrayList = new ArrayList<>();
         while (index < length) {
@@ -109,8 +113,5 @@ public class JSON {
         index = endIndex + 1;
         return value.substring(startIndex, endIndex);
     }
-
-
-
 
 }

@@ -9,15 +9,15 @@ import java.util.Map.Entry;
 import java.util.Objects;
 
 public class Phonebook {
-    private ArrayList<Contact> contacts;
-    private HashMap<String, Contact> contactsMap;
+    private final ArrayList<Contact> contacts;
+    private final HashMap<String, Contact> contactsMap;
 
     public Phonebook() {
-        contacts = new ArrayList<Contact>();
-        contactsMap = new HashMap<String, Contact>();
+        contacts = new ArrayList<>();
+        contactsMap = new HashMap<>();
     }
 
-    public ArrayList<Contact> getContacts() {
+    public List<Contact> getContacts() {
         return contacts;
     }
 
@@ -62,7 +62,6 @@ public class Phonebook {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Phone book:\n");
-        int i = 1;
         for (Contact contact : contacts) {
             sb.append(contact.toString());
         }

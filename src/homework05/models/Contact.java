@@ -6,16 +6,18 @@ import homework05.exceptions.PhoneNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 
 public class Contact implements Comparable<Contact> {
     private final String lastName;
     private final String firstName;
-    private ArrayList<String> phones;
-    private HashSet<String> phonesHash;
+    private final ArrayList<String> phones;
+    private final HashSet<String> phonesHash;
 
-    public Contact(String lastName, String firstName) {
-        this.lastName = lastName;
+    public Contact(String firstName, String lastName) {
         this.firstName = firstName;
+        this.lastName = lastName;
         this.phones = new ArrayList<>();
         this.phonesHash = new HashSet<>();
     }
@@ -29,18 +31,17 @@ public class Contact implements Comparable<Contact> {
     }
 
     public String fullName() {
-        String sb = lastName() + " " +
-                firstName();
-        return sb;
+        return firstName() + " " + lastName();
     }
 
-    public ArrayList<String> getPhones() {
+    public List<String> getPhones() {
         return phones;
     }
 
     @Override
     public int compareTo(Contact contact) {
-        return lastName.compareToIgnoreCase(contact.lastName()) * 10 + firstName.compareToIgnoreCase(contact.firstName());
+        return lastName.compareToIgnoreCase(contact.lastName()) * 10
+                + firstName.compareToIgnoreCase(contact.firstName());
     }
 
     @Override
@@ -49,6 +50,11 @@ public class Contact implements Comparable<Contact> {
         if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
         return lastName.equals(contact.lastName) && firstName.equals(contact.firstName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lastName, firstName);
     }
 
     public void addPhone(String phone) throws InvalidPhoneException, DuplicatePhoneException {
@@ -71,17 +77,18 @@ public class Contact implements Comparable<Contact> {
         return phone.matches("\\+\\d{11}");
     }
 
-    private void getContactInfo(StringBuilder sb) {
-        sb.append(String.format("%s %s\n", lastName, firstName));
+    private String getContactInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(fullName());
+        if (phones.size() > 0) sb.append("\n");
         for (String phone : phones)
             sb.append("  ").append(phone).append("\n");
+        return sb.toString();
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        getContactInfo(sb);
-        return sb.toString();
+        return getContactInfo();
     }
 
 }
