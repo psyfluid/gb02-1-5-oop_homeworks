@@ -1,0 +1,39 @@
+{
+  "phonebook": [
+    {
+      "id": 0,
+      "last_name": "Henderson",
+      "first_name": "Robert",
+      "phones": [
+        "+79991046017",
+        "+79994822446"
+      ]
+    },
+    {
+      "id": 1,
+      "last_name": "Hudson",
+      "first_name": "Shannon",
+      "phones": [
+        "+79993150920",
+        "+79992582755",
+        "+79994838300"
+      ]
+    },
+    {
+      "id": 2,
+      "last_name": "Smith",
+      "first_name": "Jonathan",
+      "phones": [
+        "+79996204185"
+      ]
+    },
+    {
+      "id": 3,
+      "last_name": "Walker",
+      "first_name": "Matthew",
+      "phones": [
+        "+79992144002"
+      ]
+    }
+  ]
+}

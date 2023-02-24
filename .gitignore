@@ -110,7 +110,7 @@ fabric.properties
 # Ignore everything but code style settings and run configurations
 # that are supposed to be shared within teams.
 
-.idea/*
+**/.idea/*
 
 !.idea/codeStyles
 !.idea/runConfigurations
@@ -146,3 +146,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Python ###
+__pycache__/
